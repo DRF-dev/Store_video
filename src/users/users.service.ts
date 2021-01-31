@@ -10,11 +10,18 @@ export class UsersServices {
     private readonly usersModel: Model<any>
   ) { }
 
-  public helloWorld(): Promise<Users> {
+  public saveUser(bufferFile: Buffer, originalBufferName: string): Promise<Users> {
+    const bufferInString = JSON.stringify(bufferFile)
     const newUser = new this.usersModel({
-      name: "hello 2",
-      value: "world 2"
+      name: "hello",
+      value: "world",
+      videoName: originalBufferName,
+      video: bufferInString
     })
     return newUser.save()
+  }
+
+  public async getAllUsers() {
+    return this.usersModel.find()
   }
 }
